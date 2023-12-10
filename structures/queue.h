@@ -3,7 +3,7 @@
 
 struct queue{
     int que[100]; // This will contain the main array
-    int index[100]; // This will contain the index of element int the original data.
+    int index[100]; // This will contain the index of element in the original data.
     int length; // Size of the queue
 };
 

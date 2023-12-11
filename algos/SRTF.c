@@ -34,38 +34,34 @@ void SRTF(struct myProcess *pr) {
         }
 
 
-        if (currentProcess == -1) { // no process is running
-            if (h.length != 0) { // there are process available for execution waiting inside the que
-                currentProcess = deque(&h); // if no process is running then run the first process from the que
+        if (currentProcess == -1) { 
+            if (h.length != 0) {
+                currentProcess = deque(&h); 
                 contextSwitches++;
-                // This one means if the process hasn't executed for even a single unit time then we can update the response time of the process to the current time - arrival time of the process
                 if (remainingBurstTime[currentProcess] == pr->burstTime[currentProcess])
                     pr->responseTime[currentProcess] = timeSpent - pr->arrivalTime[currentProcess];
 
-            } else { // there is no process available for execution
-                // increase timeSpent and idleCPUTime by 1 unit
+            } else { 
                 timeSpent++;
                 idleCPUTime++;
             }
-        } else { // currently a process is running
+        } else { 
 
-            if (remainingBurstTime[currentProcess] == 0) { // process is completed
+            if (remainingBurstTime[currentProcess] == 0) { 
                 completedProcess++;
-//                timeSpent++;
                 completionTime[currentProcess] = timeSpent;
                 turnAroundTime[currentProcess] =
-                        completionTime[currentProcess] - pr->arrivalTime[currentProcess]; // TAT = CT - AT
+                        completionTime[currentProcess] - pr->arrivalTime[currentProcess];
                 waitingTime[currentProcess] =
-                        turnAroundTime[currentProcess] - pr->burstTime[currentProcess]; // WT = TAT - BT
-                currentProcess = -1; // no process is running now
+                        turnAroundTime[currentProcess] - pr->burstTime[currentProcess]; 
+                currentProcess = -1;
             } else if (h.length != 0 && remainingBurstTime[currentProcess] > h.que[0]) {
                 insertHeap(&h, remainingBurstTime[currentProcess], currentProcess);
                 currentProcess = deque(&h);
                 if (remainingBurstTime[currentProcess] == pr->burstTime[currentProcess])
                     pr->responseTime[currentProcess] = timeSpent - pr->arrivalTime[currentProcess];
                 contextSwitches++;
-//                timeSpent++;
-            } else { // you still need to execute this process
+            } else { 
                 timeSpent++;
                 remainingBurstTime[currentProcess]--;
             }
@@ -80,7 +76,7 @@ void SRTF(struct myProcess *pr) {
 
     pr->timeSpent = timeSpent;
     pr->idleCPUTime = idleCPUTime;
-    pr->contextSwitches = contextSwitches - 1; // if we don't count the first one as context switch
+    pr->contextSwitches = contextSwitches - 1; 
     pr->totalTurnAroundTime = totalTurnAroundTime;
     pr->totalWaitingTime = totalWaitingTime;
 }

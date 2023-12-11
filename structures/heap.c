@@ -23,17 +23,6 @@ void insertHeap(struct heap *h1, int element, int index) {
     }
 }
 
-int minInHeapIndex(struct heap *h) { 
-    if (h->length == 0) return -1; 
-    int minIndex = 0; 
-    for (int i = 0; i < h->length; i++) {
-        if (h->que[i] < h->que[minIndex] && h->que[i] != -1) minIndex = i;
-        if (h->que[i] == h->que[minIndex] && h->que[i] != -1 && h->index[minIndex] > h->index[i]) minIndex = i;
-    }
-    h->min = h->que[minIndex];
-    return minIndex;
-}
-
 int deque(struct heap *h) {
     if (h->length == 0) return -1;
 
@@ -59,11 +48,22 @@ int deque(struct heap *h) {
     return removedIndex;
 }
 
+int peekFront(struct heap *h1) { 
+    return h1->que[0];
+}
+
 void printHeap(struct heap *h1) { 
     printf("\nElements: ");
     for (int i = 0; i < h1->length; i++) printf("%d ", h1->que[i]);
 }
 
-int peekFront(struct heap *h1) { 
-    return h1->que[0];
+int minInHeapIndex(struct heap *h) { 
+    if (h->length == 0) return -1; 
+    int minIndex = 0; 
+    for (int i = 0; i < h->length; i++) {
+        if (h->que[i] < h->que[minIndex] && h->que[i] != -1) minIndex = i;
+        if (h->que[i] == h->que[minIndex] && h->que[i] != -1 && h->index[minIndex] > h->index[i]) minIndex = i;
+    }
+    h->min = h->que[minIndex];
+    return minIndex;
 }

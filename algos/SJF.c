@@ -4,7 +4,7 @@
 
 void SJF(struct myProcess *pr) {
     int numProcess = pr->numProcess;
-    int timeSpent = 0, idleCPUTime = 0;
+    int timeSpent = 0;
     int *turnAroundTime = pr->turnAroundTime;
     int *completionTime = pr->completionTime;
     int *waitingTime = pr->waitingTime;
@@ -23,7 +23,6 @@ void SJF(struct myProcess *pr) {
 
     int minIndex = findMinIndex(arrivalTime, numProcess);
     if (arrivalTime[minIndex] > timeSpent) {
-        idleCPUTime += arrivalTime[minIndex] - timeSpent;
         timeSpent += arrivalTime[minIndex] - timeSpent;
     }
 
@@ -31,7 +30,6 @@ void SJF(struct myProcess *pr) {
     while (completedProcess < numProcess) {
         minIndex = findMinIndex(arrivalTime, numProcess);
         if (arrivalTime[minIndex] > timeSpent && burstTime[minIndex] != 0) {
-            idleCPUTime += arrivalTime[minIndex] - timeSpent;
             timeSpent += arrivalTime[minIndex] - timeSpent;
         }
         for (int i = 0; i < numProcess; i++) {
@@ -59,7 +57,6 @@ void SJF(struct myProcess *pr) {
         totalWaitingTime += waitingTime[i];
     }
     pr->timeSpent = timeSpent;
-    pr->idleCPUTime = idleCPUTime;
     pr->totalTurnAroundTime = totalTurnAroundTime;
     pr->totalWaitingTime = totalWaitingTime;
 }

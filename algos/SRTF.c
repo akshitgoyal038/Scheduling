@@ -5,10 +5,8 @@
 void SRTF(struct myProcess *pr) {
     int numProcess = pr->numProcess;
     int timeSpent = 0;
-    int idleCPUTime = 0;
     int  totalWaitingTime = 0;
     int totalTurnAroundTime = 0;
-    int contextSwitches = 0;
     int *turnAroundTime = pr->turnAroundTime;
     int *completionTime = pr->completionTime;
     int *waitingTime = pr->waitingTime;
@@ -37,13 +35,11 @@ void SRTF(struct myProcess *pr) {
         if (currentProcess == -1) { 
             if (h.length != 0) {
                 currentProcess = deque(&h); 
-                contextSwitches++;
                 if (remainingBurstTime[currentProcess] == pr->burstTime[currentProcess])
                     pr->responseTime[currentProcess] = timeSpent - pr->arrivalTime[currentProcess];
 
             } else { 
                 timeSpent++;
-                idleCPUTime++;
             }
         } else { 
 
@@ -60,7 +56,6 @@ void SRTF(struct myProcess *pr) {
                 currentProcess = deque(&h);
                 if (remainingBurstTime[currentProcess] == pr->burstTime[currentProcess])
                     pr->responseTime[currentProcess] = timeSpent - pr->arrivalTime[currentProcess];
-                contextSwitches++;
             } else { 
                 timeSpent++;
                 remainingBurstTime[currentProcess]--;
@@ -75,8 +70,6 @@ void SRTF(struct myProcess *pr) {
     }
 
     pr->timeSpent = timeSpent;
-    pr->idleCPUTime = idleCPUTime;
-    pr->contextSwitches = contextSwitches - 1; 
     pr->totalTurnAroundTime = totalTurnAroundTime;
     pr->totalWaitingTime = totalWaitingTime;
 }

@@ -9,7 +9,7 @@ void roundRobin(struct myProcess *pr) {
     int *waitingTime = pr->waitingTime;
     int timeQuantum = pr->timeQuantum;
 
-    int timeSpent = 0, idleCPUTime = 0, totalWaitingTime = 0, totalTurnAroundTime = 0, contextSwitches = 0;
+    int timeSpent = 0, totalWaitingTime = 0, totalTurnAroundTime = 0;
 
     int arrivalTime[numProcess], remainingBurstTime[numProcess];
 
@@ -36,13 +36,11 @@ void roundRobin(struct myProcess *pr) {
         if (currentProcess == -1) { 
             if (q.length != 0) { 
                 currentProcess = dequeQue(&q); 
-                contextSwitches++;
                 if (remainingBurstTime[currentProcess] == pr->burstTime[currentProcess]) pr->responseTime[currentProcess] = timeSpent - pr->arrivalTime[currentProcess];
 
                 quantumCounter = 0; 
             } else { 
                 timeSpent++;
-                idleCPUTime++;
             }
         } else { 
             if (quantumCounter < timeQuantum) remainingBurstTime[currentProcess]--; 
@@ -73,8 +71,6 @@ void roundRobin(struct myProcess *pr) {
     }
 
     pr->timeSpent = timeSpent;
-    pr->idleCPUTime = idleCPUTime;
-    pr->contextSwitches = contextSwitches - 1;
     pr->totalTurnAroundTime = totalTurnAroundTime;
     pr->totalWaitingTime = totalWaitingTime;
 }

@@ -19,7 +19,7 @@ void SJF(struct myProcess *pr) {
         burstTime[i] = pr->burstTime[i];
     }
 
-    struct heap h1 = createHeap(); 
+    struct heap h = createHeap(); 
 
     int minIndex = findMinIndex(arrivalTime, numProcess);
     if (arrivalTime[minIndex] > timeSpent) {
@@ -41,7 +41,7 @@ void SJF(struct myProcess *pr) {
             }
         }
 
-        if (h1.length != 0) {
+        if (h.length != 0) {
             int removedIndex = h.index[0];
             int removedBurstTime = h.que[0];
             deque(&h);
@@ -58,7 +58,6 @@ void SJF(struct myProcess *pr) {
         totalTurnAroundTime += turnAroundTime[i];
         totalWaitingTime += waitingTime[i];
     }
-    // Updating the original data in the sturct
     pr->timeSpent = timeSpent;
     pr->idleCPUTime = idleCPUTime;
     pr->totalTurnAroundTime = totalTurnAroundTime;

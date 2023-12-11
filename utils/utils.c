@@ -7,21 +7,19 @@ void printArr(int arr[], int length){
     }
 }
 
-int findMinIndex(int arr[], int length){ //finds the minimum index inside the array. (it ignores -1)
+int findMinIndex(int arr[], int length){ 
     int min = __INT_MAX__, index = length;
 
     for (int i=0; i<length; i++) if (min > arr[i] && arr[i] != -1) {
         min = arr[i];
         index = i;
     }
-
-    // if it returns index as -1 it means the all the process are executed.
     if (index == length) return -1;             
     
     return index;
 }
 
-int findMinArrivalTimeIndex(int arrivalTime[], int numProcess, int currentTime){ // This one ignores 0
+int findMinArrivalTimeIndex(int arrivalTime[], int numProcess, int currentTime){ 
     int minIndex = -1;
     int minArrivalTime = __INT_MAX__;
 

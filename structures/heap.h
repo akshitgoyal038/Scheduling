@@ -2,10 +2,10 @@
 #define HEAP_H
 
 struct heap {
-    int que[100]; // This will contain the main array
-    int index[100]; // This will contain the index of element int the original data.
-    int min; // Min element fo the heap
-    int length; // Size of the heap
+    int que[100]; 
+    int index[100]; 
+    int min;
+    int length; 
 };
 
 struct heap createHeap();

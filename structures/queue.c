@@ -1,39 +1,43 @@
 #include <stdio.h>
+#include "queue.h"
 
-struct queue createQueue(){
-    struct queue newinstance;
-    newinstance.length=0;
-    return newinstance;
+struct queue createQueue() {
+    struct queue newQueue;
+    newQueue.length = 0;
+    return newQueue;
 }
 
-void insertQueue(struct queue *q,int index){
-    if(q->length<50){
-        q->index[q->length]=index;
-        q->length++;
-    }else{
-        printf("\n Queue Size is FULL\n");
+void insertQueueQue(struct queue *q, int index) {
+    if (q->length > 100) {
+        printf("\nQueue overflow");
         return;
     }
+
+    q->index[q->length] = index;
+    q->length++;
 }
 
-int deque(struct queue *q){
-    if(q->length==0) return -1;
-    int element=q->index[0];
-    for(int i=0;i<q->length;i++){
-        q->que[i]=q->que[i+1];
-        q->index[i]=q->index[i+1];
+int dequeQue(struct queue *q) {
+    if (q->length == 0) return -1;
+    int removed = q->index[0];
+
+    // Left shift all the elements
+    for (int i = 0; i < q->length - 1; i++) {
+        q->que[i] = q->que[i + 1];
+        q->index[i] = q->index[i + 1];
     }
-    q->length-=1;
-    return element;
+    q->length--;
+
+    return removed;
 }
 
-int peek(struct queue *q){
-    if(q->length>=0) return q->que[0];
-}
-
-void printQueue(stuct queue *q){
+void printQueue(struct queue *q) {
     printf("\nElements:");
     for (int i = 0; i < q->length; i++) printf("%d ", q->que[i]);
     printf("\nIndexes: ");
     for (int i = 0; i < q->length; i++) printf("%d ", q->index[i]);
+}
+
+int peekFrontQue(struct queue *q) {
+    return q->que[0];
 }

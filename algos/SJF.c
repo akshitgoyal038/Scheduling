@@ -36,7 +36,7 @@ void SJF(struct myProcess *pr) {
         }
         for (int i = 0; i < numProcess; i++) {
             if (arrivalTime[i] <= timeSpent && burstTime[i] > 0 && arrivalTime[i] != -1) {
-                insertHeap(&h1, burstTime[i], i);
+                insertHeap(&h, burstTime[i], i);
                 burstTime[i] = 0; 
             }
         }

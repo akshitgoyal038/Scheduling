@@ -3,7 +3,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "../structures/Process.h"
+#include "../structures/myProcess.h"
 
 void printArr(int arr[], int length);
 
